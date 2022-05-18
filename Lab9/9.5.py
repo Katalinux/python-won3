@@ -23,15 +23,13 @@ with open('diploma.txt', 'r') as dpl:
 
 
 catalog = media_gen(read_data('..//Lab7/note.txt'), read_data('..//Lab7/teze.txt'))
-
 ordered_cat = sorted(catalog.items(), key=lambda v: v[1], reverse=True)
-
-premianti = [[(x + 1) * 'I', ordered_cat[x][0], f'{ordered_cat[x][1]:.2f}'] for x in range(3)]
-
-create_docx(premianti, sablon)
-
+premianti = []
 
 for i, e in enumerate(ordered_cat, start=1):
     if i < 4:
+        premianti.append([(i * 'I'), e[0], f'{e[1]:.2f}'])
         with open(f'premiul-{i}.txt', 'w') as file:
             print(sablon1.format((i * 'I'), e[0], f'{e[1]:.2f}'), file=file)
+
+create_docx(premianti, sablon)
