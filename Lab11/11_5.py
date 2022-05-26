@@ -3,8 +3,8 @@ import os
 
 def walk(root):
     global size
-    temp = os.listdir(root)
-    for item in temp:
+
+    for item in os.listdir(root):
         if os.path.isfile(os.path.join(root, item)):
             if '.py' in item[-3:].lower():
                 print(item)
