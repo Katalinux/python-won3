@@ -42,22 +42,24 @@ class Segment:
         return f'Segment(Point({self.p1}, Point({self.p2})'
 
 
-class Rectangle(Segment):
+class Rectangle:
 
     instances, square_instances = 0, 0
 
     def __init__(self, p1: Point, p2: Point):
-        super().__init__(p1, p2)
+        self.p1 = p1
+        self.p2 = p2
 
         Rectangle.instances += 1
-        if abs(self.p1.x - self.p2.x) == abs(self.p1.y - self.p2.y):
+        k = self.metrics()
+        if k[0] == k[1]:
             Rectangle.square_instances += 1
 
     def __eq__(self, other):
         return sorted(self.metrics()) == sorted(other.metrics())
 
     def __str__(self):
-        return f'Rectangle(Point({self.p1.x}, {self.p1.y}), Point({self.p2.x}, {self.p2.y}))'
+        return f'Rectangle({self.p1}, {self.p2})'
 
     def metrics(self):
         """Returns the sides of the rectangle"""
@@ -94,7 +96,8 @@ class Rectangle(Segment):
             self.verify_point_inclusion(Point(c1.x, c1.y + c1.r))
 
     def is_square(self):
-        return self.metrics()[0] == self.metrics()[1]
+        a = self.metrics()
+        return a[0] == a[1]
 
     @staticmethod
     def get_square_percent():
@@ -122,5 +125,5 @@ class Polyline:
     def __str__(self):
         b = 'Polyline('
         for v in self.pts:
-            b += f'Point({v.x}, {v.y}), '
+            b += f'{v}, '
         return b.rstrip(', ') + ')'
